@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@font-face {
+    font-family: 'Insta Story Signature';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/Insta\ Story\ Signature.ttf') format('truetype'), /* Modern Browsers */
+  
+}
+
+.home-page {
+    color: white;
+    height: 100%;
+    overflow: hidden;
+    background-color: #BDE2DE;
+
+    .title {
+        font-size: 64px;
+        text-align: center;
+        padding-left: 15px;
+        margin-top: 70px;
+        font-family: Insta Story Signature;
+        margin-bottom: 0px;
+    }
+
+    .subtitle {
+        text-align: center;
+        color: #518B77;
+        font-size: 34px;
+        margin-top: -15px;
+        text-transform: uppercase;
+        font-weight: 900;
+
+    }
+
+    .content {
+        display: flex;
+        height: 55%;
+        padding-left: 72px;
+
+        .description {
+            width: calc(60% - 72px);
+            background-color: #D1EFEA;
+            font-family: 'Montserrat', sans-serif;     
+            color: #518B77;
+            overflow: hidden;
+
+            
+            p {
+                font-size: 24px;
+                margin-top: 60px;
+                margin-left: 68px;
+                margin-right: 35%;            
+            }
+        }
+
+        .find-more {
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &-button {
+                height: 100px;
+                width: 400px;
+                border-radius: 58px;
+                background: #D1EFEA 0% 0% no-repeat padding-box;
+                outline: 0;
+                border: 0;
+                position: relative;
+                font-size: 40px;
+                color: #518B77;
+                font-weight: 300;
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
+

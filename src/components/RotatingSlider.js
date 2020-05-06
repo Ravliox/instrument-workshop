@@ -1,0 +1,215 @@
+import React from 'react';
+import './RotatingSlider.scss';
+import violin from './assets/vmaro.png'
+import piano from './assets/piano.png'
+
+export default class RotatingSlider extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            movement: false,
+            resetting: false,
+            startX: 0,
+            dragReferencePointX: 0,
+            radius: (window.innerWidth) / 2,
+            angleCheckpoints: [18, 90, 162, 234, 306],
+            points: [
+                {
+                    angle: 306,
+                    transform: '',
+                    number: 1,
+                    checkPoint: 4,
+                    type: "violin",
+                    img: violin
+                },
+                {
+                    angle: 234,
+                    transform: '',
+                    number: 2,
+                    checkPoint: 3,
+                    type: "piano",
+                    img: piano
+                },
+                {
+                    angle: 162,
+                    transform: '',
+                    number: 3,
+                    checkPoint: 2,
+                    type: "violin",
+                    img: violin
+                },
+                {
+                    angle: 90,
+                    transform: '',
+                    number: 4,
+                    checkPoint: 1,
+                    type: "piano",
+                    img: piano
+                },
+                {
+                    angle: 18,
+                    transform: '',
+                    number: 5,
+                    checkPoint: 0,
+                    type: "violin",
+                    img: violin
+                }
+            ]
+        }
+
+        this.state.points.forEach(point => {
+            this.setPosition(point);
+        })
+        console.log(this.state);
+
+    }
+
+    switchDirection(value) {
+        this.setState({
+            direction: value
+        })
+    }
+
+    startDrag(event) {
+        event.persist();
+        console.log(event);
+        if(!this.state.resetting) {
+            this.setState({
+                movement: true,
+                dragReferencePointX: event.clientX,
+                startX: event.clientX
+            })
+        }
+    }
+
+    computeAngles(event) {
+        event.persist();
+        if(this.state.movement && !this.state.resetting){
+            let direction = event.clientX > this.state.dragReferencePointX ? -1 : 1;
+            let difference = Math.abs(event.clientX - this.state.dragReferencePointX) / 10;
+            let points = [...this.state.points];
+
+            points.forEach(point => {
+                point.angle += direction * difference;
+                if(point.angle > 360) {
+                    point.angle = point.angle - 360;
+                } else if (point.angle < 0) {
+                    point.angle = point.angle + 360;
+                }
+                this.setPosition(point);
+            })
+
+            this.setState({
+                points: points,
+                dragReferencePointX: event.clientX,
+            })
+        }
+    }
+
+    
+    endDrag(event) {
+        if(this.state.movement) {
+            event.persist();
+            this.setState({
+                movement: false,
+            })
+            if(!this.state.resetting) {
+                this.setNewCheckpoints(event);
+                this.setState({
+                    resetting: true
+                })
+                this.moveToCheckpoint();
+            }
+            console.log(this.state);
+        }
+    }
+
+    moveToCheckpoint() {
+        let points = [...this.state.points];
+        
+        let interval = setInterval(() => {
+            let finished = false;
+            let centerPoint = this.state.points.filter(point => point.checkPoint === 1)[0];
+            let delta = this.calculateDelta(centerPoint, 90);
+
+            points.forEach(point => {
+                let checkPointAngle = this.state.angleCheckpoints[point.checkPoint];
+                let direction = point.angle < checkPointAngle ? 1 : -1
+                let aproximatedAngle = direction === -1 ? Math.floor(point.angle) : Math.ceil(point.angle)
+                if(aproximatedAngle === checkPointAngle) {
+                    finished = true; 
+                } else {
+                    finished = false;
+                    point.angle += direction * delta;
+                    this.setPosition(point);
+                }
+            })
+
+            if(finished) {
+                clearInterval(interval);
+                this.setState({
+                    resetting: false
+                })
+            } else {
+                this.setState({
+                    points
+                })
+            }
+        }, 10);
+    }
+
+    calculateDelta(point, checkPointAngle) {
+        let t = point.angle < checkPointAngle ? point.angle / checkPointAngle * 2 : checkPointAngle / point.angle * 2;
+        let delta = t * (2 - t);
+        return delta > 0 && delta < 1 ? delta : 0;
+    }
+    
+    setNewCheckpoints(event) {
+        let points = [...this.state.points];
+        let direction = event.clientX > this.state.startX ? 1 : -1;
+        let difference = Math.abs(event.clientX - this.state.startX);
+        console.log(`Mouse Up: ${direction} | ${difference}`);
+
+        if (difference > 150) {
+            points.forEach(point => {
+                let indexOfLeftCheckpoint = Math.floor(point.angle / 72);
+                let indexOfRightCheckpoint = indexOfLeftCheckpoint === 4 ? 0 : indexOfLeftCheckpoint + 1;
+
+                point.checkPoint = direction === -1 ? indexOfRightCheckpoint : indexOfLeftCheckpoint;
+       
+                if(indexOfLeftCheckpoint === 4 && point.checkPoint === 0) {
+                    point.angle = point.angle - 360;
+                }
+            })
+
+            this.setState({
+                points
+            })
+        }   
+    }
+
+    setPosition(point) {
+        let angleRadians = (point.angle / 180) * Math.PI;
+        let xCoeficient = Math.round(this.state.radius * Math.cos(angleRadians));
+        let yCoeficient = Math.round(this.state.radius * Math.sin(angleRadians) / 2) * -1;
+
+        point.transform = `translateX(${xCoeficient}px) translateY(${yCoeficient}px)`;
+    }
+
+    render() {
+        return (
+            <div>
+                <div className = "point-container" style={{cursor: this.state.movement ? "grabbing" : "default"}} 
+                onMouseUp={(e) => this.endDrag(e)} onMouseMove={(e) => this.computeAngles(e)}>
+                    {this.state.points.map((point, index) =>
+                    <div className = "point" key={index} style={{transform: point.transform, backgroundColor: "red"}}>
+                        <img className={point.type} src={point.img} onMouseDown={(e) => this.startDrag(e)} onMouseLeave={(e) => this.endDrag(e)}
+                        style={{cursor: this.state.movement ? "grabbing" : "grab"}} />
+                    </div>
+                    )}
+                </div>
+            </div>
+        )
+    }
+} 
