@@ -3,6 +3,10 @@ import './RotatingSlider.scss';
 import violin from './assets/vmaro.png'
 import piano from './assets/piano.png'
 
+import Icon from '@mdi/react'
+import { mdiChevronLeft } from '@mdi/js';
+import { mdiChevronRight } from '@mdi/js';
+
 export default class RotatingSlider extends React.Component {
     constructor(props) {
         super(props);
@@ -12,57 +16,61 @@ export default class RotatingSlider extends React.Component {
             resetting: false,
             startX: 0,
             dragReferencePointX: 0,
-            radius: (window.innerWidth) / 2,
+            // radius: (window.innerWidth) / 2 + 400,
+            radius: 400,
             angleCheckpoints: [18, 90, 162, 234, 306],
             points: [
-                {
-                    angle: 306,
-                    transform: '',
-                    number: 1,
-                    checkPoint: 4,
-                    type: "violin",
-                    img: violin
-                },
-                {
-                    angle: 234,
-                    transform: '',
-                    number: 2,
-                    checkPoint: 3,
-                    type: "piano",
-                    img: piano
-                },
-                {
-                    angle: 162,
-                    transform: '',
-                    number: 3,
-                    checkPoint: 2,
-                    type: "violin",
-                    img: violin
-                },
-                {
-                    angle: 90,
-                    transform: '',
-                    number: 4,
-                    checkPoint: 1,
-                    type: "piano",
-                    img: piano
-                },
-                {
-                    angle: 18,
-                    transform: '',
-                    number: 5,
-                    checkPoint: 0,
-                    type: "violin",
-                    img: violin
-                }
-            ]
+            {
+                angle: 306,
+                transform: '',
+                number: 1,
+                checkPoint: 4,
+                type: "violin",
+                img: violin,
+                imgTransform: ""
+            },
+            {
+                angle: 234,
+                transform: '',
+                number: 2,
+                checkPoint: 3,
+                type: "piano",
+                img: piano,
+                imgTransform: ""
+            },
+            {
+                angle: 162,
+                transform: '',
+                number: 3,
+                checkPoint: 2,
+                type: "violin",
+                img: violin
+            },
+            {
+                angle: 90,
+                transform: '',
+                number: 4,
+                checkPoint: 1,
+                type: "piano",
+                img: piano,
+                imgTransform: ""
+            },
+            {
+                angle: 18,
+                transform: '',
+                number: 5,
+                checkPoint: 0,
+                type: "violin",
+                img: violin,
+                imgTransform: ""
+            }
+        ]
         }
 
         this.state.points.forEach(point => {
             this.setPosition(point);
         })
         console.log(this.state);
-
     }
 
     switchDirection(value) {
@@ -87,7 +95,7 @@ export default class RotatingSlider extends React.Component {
         event.persist();
         if(this.state.movement && !this.state.resetting){
             let direction = event.clientX > this.state.dragReferencePointX ? -1 : 1;
-            let difference = Math.abs(event.clientX - this.state.dragReferencePointX) / 10;
+            let difference = Math.abs(event.clientX - this.state.dragReferencePointX) / 7;
             let points = [...this.state.points];
 
             points.forEach(point => {
@@ -121,7 +129,7 @@ export default class RotatingSlider extends React.Component {
                 })
                 this.moveToCheckpoint();
             }
-            console.log(this.state);
+            // console.log(this.state);
         }
     }
 
@@ -135,9 +143,17 @@ export default class RotatingSlider extends React.Component {
 
             points.forEach(point => {
                 let checkPointAngle = this.state.angleCheckpoints[point.checkPoint];
-                let direction = point.angle < checkPointAngle ? 1 : -1
-                let aproximatedAngle = direction === -1 ? Math.floor(point.angle) : Math.ceil(point.angle)
-                if(aproximatedAngle === checkPointAngle) {
+                let direction = point.angle < checkPointAngle ? 1 : -1;
+                
+                if(point.checkPoint === 0 && point.angle < 360 && point.angle > 300) {
+                    point.angle = 360 - point.angle;
+                }
+
+                if(point.checkPoint === 4 && point.angle > 0 && point.angle < 72) {
+                    point.angle = 360 + point.angle;
+                }
+
+                if(Math.abs(point.angle - checkPointAngle) < 0.01) {
                     finished = true; 
                 } else {
                     finished = false;
@@ -169,8 +185,7 @@ export default class RotatingSlider extends React.Component {
         let points = [...this.state.points];
         let direction = event.clientX > this.state.startX ? 1 : -1;
         let difference = Math.abs(event.clientX - this.state.startX);
-        console.log(`Mouse Up: ${direction} | ${difference}`);
-
+        // console.log(`Mouse Up: ${direction} | ${difference}`);
         if (difference > 150) {
             points.forEach(point => {
                 let indexOfLeftCheckpoint = Math.floor(point.angle / 72);
@@ -197,17 +212,43 @@ export default class RotatingSlider extends React.Component {
         point.transform = `translateX(${xCoeficient}px) translateY(${yCoeficient}px)`;
     }
 
+    slideRight() {
+        let points = [...this.state.points];
+        points.forEach(point => point.checkPoint = point.checkPoint === 0 ? 4 : point.checkPoint - 1);
+        this.setState({
+            points
+        });
+        console.log(this.state);
+
+        this.moveToCheckpoint();
+    }
+
+    slideLeft() {
+        let points = [...this.state.points];
+        points.forEach(point => point.checkPoint = point.checkPoint === 4 ? 0 : point.checkPoint + 1);
+        this.setState({
+            points
+        });
+        console.log(this.state);
+
+        this.moveToCheckpoint();
+    }
+
     render() {
         return (
             <div>
                 <div className = "point-container" style={{cursor: this.state.movement ? "grabbing" : "default"}} 
                 onMouseUp={(e) => this.endDrag(e)} onMouseMove={(e) => this.computeAngles(e)}>
                     {this.state.points.map((point, index) =>
-                    <div className = "point" key={index} style={{transform: point.transform, backgroundColor: "red"}}>
+                    <div className = "point" key={index} style={{transform: point.transform}}>
                         <img className={point.type} src={point.img} onMouseDown={(e) => this.startDrag(e)} onMouseLeave={(e) => this.endDrag(e)}
                         style={{cursor: this.state.movement ? "grabbing" : "grab"}} />
                     </div>
                     )}
+                    <div className = "button-container">
+                        <Icon path={mdiChevronLeft} onClick={(e) => this.slideLeft()} size={3} color="white"/>
+                        <Icon path={mdiChevronRight} onClick={(e) => this.slideRight()} size={3} color="white"/>
+                    </div>
                 </div>
             </div>
         )
