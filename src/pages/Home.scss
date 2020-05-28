@@ -5,50 +5,254 @@
     font-weight: 400;
     src: url('../fonts/Insta\ Story\ Signature.ttf') format('truetype'), /* Modern Browsers */
 }
-
+$duration: 0.2s;
 .home-page {
-    color: white;
+    svg.title {
+        .cls-1 {
+            fill:none;
+            stroke: #fff;
+            stroke-width: 4px;
+        }
+        height: 138px;
+        text-align: center;
+        display: block;
+        margin: auto;
+        margin-top: 70px;
+
+        @media screen and (max-height: 800px) and (min-width: 600px){
+            height: 100px;
+        }
+
+        @media screen and (max-height: 700px) and (min-width: 600px){
+            height: 70px;
+        }
+    }
+
+    transition: $duration all;
+
+    &.turqouise {
+        background-color: #BDE2DE;
+
+        .subtitle {
+            color: #518B77;
+        }
+
+        .content {
+            .description {
+                background-color: #D1EFEA;
+                color: #518B77;
+
+                .close-button {
+                    svg path {
+                        fill: #518B77 !important;
+                    }
+
+                    &:hover {
+                        background-color: #BDE2DE;
+                    }
+                }
+
+            }
+
+            .find-more {
+                &-button {
+                    background: #D1EFEA 0% 0% no-repeat padding-box;
+                    color: #518B77;    
+                }
+
+                &-button:hover {
+                    background: #518B77 0% 0% no-repeat padding-box;
+                    color: #D1EFEA;                       
+                }
+            }
+        }
+    }
+
+    &.bej {
+        background-color: #CEE2BD;
+
+        .subtitle {
+            color: #9AB485;
+        }
+
+        .content {
+            .description {
+                background-color: #DFEFD1;
+                color: #6B8B51;
+
+                .close-button {
+                    svg path {
+                        fill: #9AB485 !important;
+                    }
+
+                    &:hover {
+                        background-color: #CEE2BD;
+                    }
+                }
+            }
+
+            .find-more {
+                &-button {
+                    background: #DFEFD1 0% 0% no-repeat padding-box;
+                    color: #6B8B51;    
+                }
+
+                &-button:hover {
+                    background: #6B8B51 0% 0% no-repeat padding-box;
+                    color: #DFEFD1;                       
+                }
+            }
+        }
+    }
+
+    
+    &.pink {
+        background-color: #E2BDBD;
+
+        .subtitle {
+            color: #B48585;
+        }
+
+        .content {
+            .description {
+                background-color: #EFD8D1;
+                color: #8B5151;
+
+                .close-button {
+                    svg path {
+                        fill: #B48585 !important;
+                    }
+
+                    &:hover {
+                        background-color: #E2BDBD;
+                    }
+                }
+            }
+
+            .find-more {
+                &-button {
+                    background: #EFD8D1 0% 0% no-repeat padding-box;
+                    color: #B48585;    
+                }
+
+                &-button:hover {
+                    background: #B48585 0% 0% no-repeat padding-box;
+                    color: #EFD8D1;                       
+                }
+            }
+        }
+    }
+
     height: 100%;
     overflow: hidden;
-    background-color: #BDE2DE;
-
-    .title {
-        font-size: 64px;
-        text-align: center;
-        padding-left: 15px;
-        margin-top: 70px;
-        font-family: Insta Story Signature;
-        margin-bottom: 0px;
-    }
 
     .subtitle {
         text-align: center;
-        color: #518B77;
         font-size: 34px;
         margin-top: -15px;
         text-transform: uppercase;
         font-weight: 900;
+        transition: $duration all;
 
+        @media screen and (max-height: 800px) and (min-width: 600px){
+            font-size: 24px;
+        }
+
+        @media screen and (max-height: 700px) and (min-width: 600px){
+            font-size: 18px;
+        }
     }
 
     .content {
         display: flex;
         height: 55vh;
-        padding-left: 72px;
+        padding: 0 72px;
 
         .description {
             width: calc(60% - 72px);
-            background-color: #D1EFEA;
             font-family: 'Montserrat', sans-serif;     
-            color: #518B77;
             overflow: hidden;
+            transition: 0.5s;
+            position: relative;
+            display: flex;
 
+            .expanded-content {
+                display: flex;
+                flex-direction: column;
+                width: 40%;
+                transition: $duration opacity;
+
+                &-title {
+                    font-family: Roboto;
+                    font-weight: 800;
+                    font-size: 32px;
+                    margin-bottom: 0;
+
+                    @media screen and (max-height: 700px) and (min-width: 600px){
+                        font-size: 28px;
+                    }
+                }
+
+                &-description {
+                    font-size: 24px;
+                    margin-top: 22px;
+                    font-weight: 300;
+
+                    @media screen and (max-height: 700px) and (min-width: 600px){
+                        font-size: 20px;
+                    }
+                }
+
+                &-stars {
+                    svg {
+                        margin-right: 12px;
+                    }
+                }
+
+                &-options {
+                    margin-top: 20px;
+                    svg {
+                        margin-right: 12px;
+                    }
+                }
+            }
+
+            .close-button {
+                outline: 0;
+                border: 0;
+                background-color: transparent;
+                position: absolute;
+                right: 0;
+                cursor: pointer;
+                border-radius: 50%;
+                top: 3px;
+                right: 3px;
+                transition: $duration opacity;
+            }
+
+            &.expanded {
+                width: 100%;
+                justify-content: flex-end;
+                padding-right: 135px;
+            }
             
-            p {
+            & > p {
                 font-size: 24px;
                 margin-top: 60px;
                 margin-left: 68px;
-                margin-right: 18vw;            
+                margin-right: 18vw;     
+                opacity: 1;                  
+                transition: $duration all;
+                line-height: 1.7;
+                
+                @media screen and (max-height: 800px) and (min-width: 600px) {
+                    font-size: 20px;
+                }
+
+                @media screen and (max-height: 700px) and (min-width: 600px){
+                    font-size: 15px;
+                    margin-top: 30px;
+                }
             }
         }
 
@@ -57,23 +261,38 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            &.retracted {
+                width: 0%;
+            }
 
             &-button {
                 height: 100px;
-                width: 400px;
+                width: 60%;
                 border-radius: 58px;
-                background: #D1EFEA 0% 0% no-repeat padding-box;
                 outline: 0;
                 border: 0;
+                left: 72px;
                 position: relative;
                 font-size: 40px;
-                color: #518B77;
                 font-weight: 300;
                 cursor: pointer;
+                transition: $duration all;
+                opacity: 1;
+
+                @media screen and (max-height: 800px) and (min-width: 600px) {
+                    font-size: 30px;
+                }
+
+                @media screen and (max-height: 700px) and (min-width: 600px){
+                    font-size: 24px;
+                }
             }
         }
     }
 
+    .hidden {
+        opacity: 0 !important;
+    }
 }
 
 

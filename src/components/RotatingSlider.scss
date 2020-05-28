@@ -17,6 +17,11 @@
         .button-container {
             display: flex;
             justify-content: center;
+            opacity: 1;
+            transition: 0.2s opacity;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
 
             svg {
                 cursor: pointer;
@@ -38,35 +43,116 @@
         -webkit-user-select: none;
         -ms-user-select: none;
         position: absolute;
+        transition: 0.5s all;
         left: 0;
+
     }
 
     .violin {
-        // @media screen and (max-height: 800px) {
-        //     width: 14vw;
-        //     left: -7vw;
-        //     top: 15vh;
-        // }
+        @media screen and (max-height: 800px) and (min-width: 600px){
+            width: 14vw;
+            left: -7vw;
+            top: 5vh;
+        }
 
-        // @media screen and (min-height: 801px) {
-        //     width: 12vw;
-        //     left: -6vw;
-        // }
-        width: 2vw;
+        @media screen and (min-height: 801px) and (min-width: 600px){
+            width: 14vw;
+            left: -7vw;
+        }
+
+        @media screen and (max-height: 700px) and (min-width: 600px){
+            width: 13vw;
+            left: -6.5vw;
+            top: 9vh; 
+        }
+
+        &.translated {
+            width: 18vw;
+            transform: translateX(-35vw) translateY(-100px);
+        }
+
+        &.alt-img {
+            width: 8vw;
+            left: 300px;
+            top: 200px;
+            position: absolute;
+            transition: 0.5s all;
+
+            img {
+                width: 100%;
+                position: relative;
+            }
+            
+            .expanded-button-row {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+
+                button {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    border: 0;
+                    margin: 0 5px;
+                    cursor: pointer;
+                    transition: 0.3s all;
+                    outline: 0;
+                    padding: 0;
+                    
+                    .bej & {
+                        background-color: #9AB485;
+                    }
+
+                    .bej &.selected {
+                        background-color: #6B8B51;
+                    }
+
+                    .turqouise & {
+                        background-color: #BDE2DE;
+                    }
+
+                    .turqouise &.selected {
+                        background-color: #518B77;
+                    }
+
+                    .pink & {
+                        background-color: #E2BDBD;
+                    }
+
+                    .pink &.selected {
+                        background-color: #8B5151;
+                    }
+                }
+            }
+        }
+
+
     }
 
     .piano {
-        // @media screen and (max-height: 800px) {
-        //     width: 28vw;
-        //     left: -13vw;
-        //     top: 15vh;
-        // }
+        @media screen and (max-height: 800px) and (min-width: 600px){
+            width: 28vw;
+            left: -13vw;
+            top: 5vh;
+        }
 
-        // @media screen and (min-height: 801px) {
-        //     top: -5vh;
-        //     width: 24vw;
-        //     left: -12vw;
-        // }
-        width: 2vw;
+        @media screen and (min-height: 801px) and (min-width: 600px){
+            top: -5vh;
+            width: 28vw;
+            left: -12vw;
+        }
+
+        @media screen and (max-height: 700px) and (min-width: 600px){
+            top: 5vh;
+        }
+
+        &.translated {
+            width: 35vw;
+            transform: translateX(-30vw) translateY(-50px);
+        }
+    }
+
+    .hidden {
+        opacity: 0;
     }
 }  
