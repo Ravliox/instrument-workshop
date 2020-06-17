@@ -2,15 +2,10 @@ import React from 'react'
 import './Home.scss'
 import d from './d';
 
-import RotatingSlider from '../components/RotatingSlider'
+import RotatingSlider from '../../components/RotatingSlider/RotatingSlider'
+import ExpandedContent from '../../components/ExpandedContent/ExpandedContent'
+
 import anime from 'animejs/lib/anime.es.js';
-import Icon from '@mdi/react'
-import { mdiClose } from '@mdi/js';
-import { mdiStar } from '@mdi/js';
-import { mdiStarOutline } from '@mdi/js';
-import { mdiPencil } from '@mdi/js';
-import { mdiCartOutline } from '@mdi/js';
-import { mdiHeartOutline } from '@mdi/js';
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -23,6 +18,9 @@ export default class Home extends React.Component {
             animationFinishedTrigger: false,
             fillTitle: false
         }
+
+        this.retract = this.retract.bind(this);
+
     }
 
     componentDidMount() {
@@ -73,37 +71,18 @@ export default class Home extends React.Component {
                 <path id="anime_target" data-name="Path 7" className={`cls-1 ${this.state.fillTitle ? 'fill' : ''}`} d={d} transform="translate(0.5 88.5)"/>
             </svg>
             <h2 className="subtitle">Pour les passions des tous les jours.</h2>
-            <div className="content">
+            <div className={`content ${this.state.expandedDisplayTrigger ? 'expanded' : ""}`}>
                 <div className={`description ${this.state.expandedDisplayTrigger ? 'expanded' : ""}`}>
+                    { !this.state.expandedDisplayTrigger &&
+                        <h1 className={`${this.state.expandedOpacityTrigger ? 'hidden' : ''}`}>{this.props.instruments[this.props.currentIndex].expandedContent.title}</h1>
+                    }
                     { !this.state.expandedDisplayTrigger &&
                         <p className={`${this.state.expandedOpacityTrigger ? 'hidden' : ''}`}>{this.props.instruments[this.props.currentIndex].description}</p>
                     }
-                    {
-                        this.state.expandedDisplayTrigger && 
-                        <button className={`close-button ${!this.state.animationFinishedTrigger ? 'hidden' : ''}`} onClick={() => this.retract()}>
-                            <Icon path={mdiClose} size={2} />
-                        </button>
-                    }
-                    {
-                        this.state.expandedDisplayTrigger && 
-                        <div className={`expanded-content ${!this.state.animationFinishedTrigger ? 'hidden' : ''}`}>
-                            <h2 className="expanded-content-title">Infinity Violin</h2>
-                            <p className="expanded-content-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-                            <div className="expanded-content-stars">
-                                <Icon path={mdiStar} size={1} />
-                                <Icon path={mdiStar} size={1} />
-                                <Icon path={mdiStar} size={1} />
-                                <Icon path={mdiStar} size={1} />
-                                <Icon path={mdiStarOutline} size={1} />
-
-                            </div>
-                            <div className="expanded-content-options">
-                                <Icon path={mdiPencil} size={1} />
-                                <Icon path={mdiCartOutline} size={1} />
-                                <Icon path={mdiHeartOutline} size={1} />
-                            </div>
-                        </div>
-                    }
+                    <ExpandedContent expandedDisplay={this.state.expandedDisplayTrigger}
+                    animationFinished={this.state.animationFinishedTrigger}
+                    content={this.props.instruments[this.props.currentIndex].expandedContent}
+                    retract={this.retract} />
                 </div>
                 <div className={`find-more ${this.state.animationTrigger ? 'retracted' : ""}`}>
                     { !this.state.animationTrigger &&

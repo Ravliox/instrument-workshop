@@ -1,12 +1,19 @@
 import React from 'react';
 import './RotatingSlider.scss';
-import violin from './assets/vmaro.png'
-import vblack from './assets/vblack.png'
-import piano from './assets/piano.png'
+import violin from '../assets/vmaro.png'
+import vblack from '../assets/vblack.png'
+import piano from '../assets/piano.png'
+import guitar from '../assets/guitar.png'
+import guitarb from '../assets/guitarb.png'
+import flute from '../assets/flute.png'
+import cello from '../assets/cello.png'
 
 import Icon from '@mdi/react'
 import { mdiChevronLeft } from '@mdi/js';
 import { mdiChevronRight } from '@mdi/js';
+
+import { useSwipeable, Swipeable } from 'react-swipeable'
+
 
 export default class RotatingSlider extends React.Component {
     constructor(props) {
@@ -25,17 +32,17 @@ export default class RotatingSlider extends React.Component {
                 angle: 306,
                 transform: '',
                 checkPoint: 4,
-                type: "violin",
-                img: violin,
-                altImg: vblack,
+                type: "guitar",
+                img: guitar,
+                altImg: guitarb,
                 altImgSelected: false
             },
             {
                 angle: 234,
                 transform: '',
                 checkPoint: 3,
-                type: "piano",
-                img: piano,
+                type: "cello",
+                img: cello,
                 altImg: null,
                 altImgSelected: false
             },
@@ -61,9 +68,9 @@ export default class RotatingSlider extends React.Component {
                 angle: 18,
                 transform: '',
                 checkPoint: 0,
-                type: "violin",
-                img: violin,
-                altImg: vblack,
+                type: "flute",
+                img: flute,
+                altImg: null,
                 altImgSelected: false
             }
         ]
@@ -100,6 +107,7 @@ export default class RotatingSlider extends React.Component {
     }
 
     startDrag(event) {
+        event.preventDefault();
         event.persist();
         if(!this.state.resetting && !this.props.displayTrigger) {
             this.setState({
@@ -236,7 +244,7 @@ export default class RotatingSlider extends React.Component {
     }
 
     slideRight() {
-        if(!this.state.resetting) {
+        if(!this.state.resetting && !this.props.displayTrigger) {
             let points = [...this.state.points];
             points.forEach(point => point.checkPoint = point.checkPoint === 0 ? 4 : point.checkPoint - 1);
             this.setState({
@@ -249,7 +257,7 @@ export default class RotatingSlider extends React.Component {
     }
 
     slideLeft() {
-        if(!this.state.resetting) {
+        if(!this.state.resetting && !this.props.displayTrigger) {
             let points = [...this.state.points];
             points.forEach(point => point.checkPoint = point.checkPoint === 4 ? 0 : point.checkPoint + 1);
             this.setState({
@@ -285,6 +293,7 @@ export default class RotatingSlider extends React.Component {
     render() {
         return (
             <div>
+                <Swipeable onSwipedLeft={() => this.slideLeft()} onSwipedRight={() => this.slideRight()}>
                 <div className = "point-container" style={{cursor: this.state.movement && !this.props.displayTrigger ? "grabbing" : "default"}} 
                 onMouseUp={(e) => this.endDrag(e)} onMouseMove={(e) => this.computeAngles(e)}>
                     {this.state.points.map((point, index) =>
@@ -297,7 +306,7 @@ export default class RotatingSlider extends React.Component {
                             point.altImg && this.props.displayTrigger &&
                             <div className={`alt-img ${point.type} ${this.props.displayTrigger ? "translated" : ""} ${this.props.animationFinished ? "" : "hidden"}`}>
                                 <img src={point.altImg}></img>
-                                <div class="expanded-button-row">
+                                <div className="expanded-button-row">
                                     <button onClick={() => this.flipAltImage(false)} className={`${point.altImgSelected ? "" : "selected"}`}></button>
                                     <button onClick={() => this.flipAltImage(true)} className={`${!point.altImgSelected ? "" : "selected"}`}></button>
                                 </div>
@@ -310,6 +319,7 @@ export default class RotatingSlider extends React.Component {
                         <Icon path={mdiChevronRight} onClick={(e) => this.slideRight()} size={3} color="white"/>
                     </div>}
                 </div>
+                </Swipeable>
             </div>
         )
     }
