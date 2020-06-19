@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/instrument-workshop/static/css/main.a050f881.chunk.css",
+    "main.js": "/instrument-workshop/static/js/main.ea331408.chunk.js",
+    "main.js.map": "/instrument-workshop/static/js/main.ea331408.chunk.js.map",
+    "runtime-main.js": "/instrument-workshop/static/js/runtime-main.3ecf23da.js",
+    "runtime-main.js.map": "/instrument-workshop/static/js/runtime-main.3ecf23da.js.map",
+    "static/js/2.ca56a3a8.chunk.js": "/instrument-workshop/static/js/2.ca56a3a8.chunk.js",
+    "static/js/2.ca56a3a8.chunk.js.map": "/instrument-workshop/static/js/2.ca56a3a8.chunk.js.map",
+    "index.html": "/instrument-workshop/index.html",
+    "precache-manifest.ab2a4c55f03fb64c5b87de5dd2f8191b.js": "/instrument-workshop/precache-manifest.ab2a4c55f03fb64c5b87de5dd2f8191b.js",
+    "service-worker.js": "/instrument-workshop/service-worker.js",
+    "static/css/main.a050f881.chunk.css.map": "/instrument-workshop/static/css/main.a050f881.chunk.css.map",
+    "static/js/2.ca56a3a8.chunk.js.LICENSE.txt": "/instrument-workshop/static/js/2.ca56a3a8.chunk.js.LICENSE.txt",
+    "static/media/cello.png": "/instrument-workshop/static/media/cello.ba756bf7.png",
+    "static/media/flute.png": "/instrument-workshop/static/media/flute.7196ad47.png",
+    "static/media/guitar.png": "/instrument-workshop/static/media/guitar.1ce310fe.png",
+    "static/media/guitarb.png": "/instrument-workshop/static/media/guitarb.2405fbe9.png",
+    "static/media/piano.png": "/instrument-workshop/static/media/piano.c754b474.png",
+    "static/media/vblack.png": "/instrument-workshop/static/media/vblack.5a22b2ea.png",
+    "static/media/vmaro.png": "/instrument-workshop/static/media/vmaro.32688dcf.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3ecf23da.js",
+    "static/js/2.ca56a3a8.chunk.js",
+    "static/css/main.a050f881.chunk.css",
+    "static/js/main.ea331408.chunk.js"
+  ]
+}
