@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fc0690fdad61ef207c64d3bf9830d8ec",
+    "revision": "9dd76b89fd6e9c6d483caa9beaef101b",
     "url": "/instrument-workshop/index.html"
   },
   {
-    "revision": "00d5eea60ad706048f76",
-    "url": "/instrument-workshop/static/css/main.a050f881.chunk.css"
+    "revision": "f6acb17fcff5d779428f",
+    "url": "/instrument-workshop/static/css/main.a1ed95da.chunk.css"
   },
   {
     "revision": "fcc1840e941de5ba5d4e",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/instrument-workshop/static/js/2.ca56a3a8.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "00d5eea60ad706048f76",
-    "url": "/instrument-workshop/static/js/main.ea331408.chunk.js"
+    "revision": "f6acb17fcff5d779428f",
+    "url": "/instrument-workshop/static/js/main.87c9df9b.chunk.js"
   },
   {
     "revision": "e88535771e20de58f004",
