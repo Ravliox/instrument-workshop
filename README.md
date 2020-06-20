@@ -1,9 +1,9 @@
-## Instrument Workshop
+# Instrument Workshop
 
 This project is a demo for a fictional instrument workshop bussiness. The main purpose of it was to implement a complex style of design 
 initially created in Adobe XD by a designer. The project was built using React.js and is a simple SPA app. 
 
-# Structure of the project
+## Structure of the project
 
 The project is structured in pages and components
 
@@ -22,7 +22,7 @@ structure a project such as this.
 The **rotating slider** is the central piece of this project, as sliding between the instruments causes various changes to occur in the app such as
 color changes and text changes. The rotating slider is a personal implementation.
 
-# Skills showcased
+## Skills showcased
 
 The purpose of this project was to showcase the following skills:
 
