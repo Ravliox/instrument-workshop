@@ -1,7 +1,5 @@
 ## Instrument Workshop
 
-# Eduard Istrate(development) and Bianca Ciobăniță(Web Design) 
-
 This project is a demo for a fictional instrument workshop bussiness. The main purpose of it was to implement a complex style of design 
 initially created in Adobe XD by a designer. The project was built using React.js and is a simple SPA app. 
 
@@ -33,4 +31,6 @@ The purpose of this project was to showcase the following skills:
 * implementing complex layouts from Adobe XD in to code 
 * CSS animations and transitions 
 * creating responsive web apps (while not all devices were covered due to time the app is mobile and desktop friendly)
-* basic geometry 
+* basic geometry
+
+**Eduard Istrate(development) and Bianca Ciobăniță(Web Design)** 
